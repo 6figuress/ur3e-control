@@ -9,7 +9,8 @@ setup(
     url='https://github.com/oroulet/python-urx',
     packages=["URBasic"],
     provides=["URBasic"],
-    install_requires=[],
+    install_requires=["opencv-python", "requests"],
+    python_requires=">=3.10,<3.12",
     license="GNU Lesser General Public License v3",
     classifiers=[
         "Programming Language :: Python",
