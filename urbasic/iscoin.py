@@ -15,7 +15,7 @@ from .robotModel import RobotModel
 from .urScriptExt import UrScriptExt
 from .devices import RobotiqTwoFingersGripper, RobotiqWristCamera
 from .waypoint6d import Joint6D
-import URBasic
+import urbasic
 
 import cv2
 import threading

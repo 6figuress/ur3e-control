@@ -40,6 +40,8 @@ from .robotModel import RobotModel
 from .rtde import RTDE
 from .urScript import UrScript
 from .urScriptExt import UrScriptExt
-from .devices import *
+from .devices.camera_settings import *
+from .devices.robotiq_two_fingers_gripper import *
+from .devices.robotiq_wrist_camera import *
 from .waypoint6d import *
 from .iscoin import ISCoin

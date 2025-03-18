@@ -26,7 +26,7 @@ __author__ = "Martin Huus Bjerge"
 __copyright__ = "Copyright 2017, Rope Robotics ApS, Denmark"
 __license__ = "MIT License"
 
-import URBasic
+import urbasic
 import threading
 import socket
 import struct
@@ -43,36 +43,38 @@ class ConnectionState:
     STARTED = 4
 
 
-class DashBoard(threading.Thread): 
-    '''
-    A Universal Robot can be controlled from remote by sending simple commands to the 
-    GUI over a TCP/IP socket. This interface is called the "DashBoard server". 
+class DashBoard(threading.Thread):
+    """
+    A Universal Robot can be controlled from remote by sending simple commands to the
+    GUI over a TCP/IP socket. This interface is called the "DashBoard server".
     The server is running on port 29999 on the robots IP address.
     See more at: http://www.universal-robots.com/how-tos-and-faqs/how-to/ur-how-tos/dashboard-server-port-29999-15690/
-    
+
     The constructor takes a UR robot hostname as input, and optional a logger object.
 
     Input parameters:
     host (string):  hostname or IP of UR Robot (RT CLient server)
     logger (URBasis_DataLogging obj): A instance if a logger object if common logging is needed.
 
-    
+
     Example:
-    rob = URBasic.realTimeClient.RT_CLient('192.168.56.101')
+    rob = urbasic.realTimeClient.RT_CLient('192.168.56.101')
     self.close_rtc()
 
-    
-    '''
+
+    """
 
     def __init__(self, robotModel):
         '''
         Constructor see class description for more info.
         '''
         if(False):
-            assert isinstance(robotModel, URBasic.robotModel.RobotModel)  ### This line is to get code completion for RobotModel
+            assert isinstance(
+                robotModel, urbasic.robotModel.RobotModel
+            )  ### This line is to get code completion for RobotModel
         self.__robotModel = robotModel
 
-        logger = URBasic.dataLogging.DataLogging()
+        logger = urbasic.dataLogging.DataLogging()
         name = logger.AddEventLogging(__name__)        
         self._logger = logger.__dict__[name]
         self.__reconnectTimeout = 60 #Seconds (while in run)
@@ -362,12 +364,12 @@ class DashBoard(threading.Thread):
         return False
 
     def close(self):
-        '''
+        """
         Close the DashBoard connection.
         Example:
-        rob = URBasic.dashboard.DashBoard('192.168.56.101', rtde_conf_filename='rtde_configuration.xml', logger=logger)
+        rob = urbasic.dashboard.DashBoard('192.168.56.101', rtde_conf_filename='rtde_configuration.xml', logger=logger)
         rob.close_dbs()
-        '''
+        """
 #        if self.IsRtcConnected():
 #            self.close_rtc()
 

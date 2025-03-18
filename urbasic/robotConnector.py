@@ -25,7 +25,7 @@ __author__ = "Martin Huus Bjerge"
 __copyright__ = "Copyright 2017, Rope Robotics ApS, Denmark"
 __license__ = "MIT License"
 
-import URBasic
+import urbasic
 #import URplus #import if any UPplus modules is needed
 
 class RobotConnector(object):
@@ -42,19 +42,21 @@ class RobotConnector(object):
         Constructor see class description for more info.
         '''
         if(False):
-            assert isinstance(robotModel, URBasic.robotModel.RobotModel)  ### This line is to get code completion for RobotModel
+            assert isinstance(
+                robotModel, urbasic.robotModel.RobotModel
+            )  ### This line is to get code completion for RobotModel
         self.RobotModel = robotModel
         self.RobotModel.ipAddress = host
         self.RobotModel.hasForceTorqueSensor = hasForceTorque
-        self.RealTimeClient = URBasic.realTimeClient.RealTimeClient(robotModel)
-        self.DataLog = URBasic.dataLog.DataLog(robotModel)
-        self.RTDE = URBasic.rtde.RTDE(robotModel, conf_filename=conf_filename)
-        self.DashboardClient = URBasic.dashboard.DashBoard(robotModel)
+        self.RealTimeClient = urbasic.realTimeClient.RealTimeClient(robotModel)
+        self.DataLog = urbasic.dataLog.DataLog(robotModel)
+        self.RTDE = urbasic.rtde.RTDE(robotModel, conf_filename=conf_filename)
+        self.DashboardClient = urbasic.dashboard.DashBoard(robotModel)
         self.ForceTourqe = None
         # if hasForceTorque:
         #     self.ForceTourqe = URplus.forceTorqueSensor.ForceTorqueSensor(robotModel)
 
-        logger = URBasic.dataLogging.DataLogging()
+        logger = urbasic.dataLogging.DataLogging()
         name = logger.AddEventLogging(__name__)
         self.__logger = logger.__dict__[name]
         self.__logger.info('Init done')

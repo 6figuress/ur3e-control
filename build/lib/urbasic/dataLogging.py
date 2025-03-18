@@ -31,7 +31,7 @@ import logging
 import time
 import os
 import re
-import URBasic
+import urbasic
 import xml.etree.ElementTree as ET
 import ast
 from six import with_metaclass
@@ -111,7 +111,7 @@ class DataLogging(with_metaclass(Singleton, object)):
         Path format .\[path]\YY-mm-dd\HH-MM-SS\
         '''
         if path is None:
-            path = URBasic.__file__[0:URBasic.__file__.find('URBasic')] + 'log'
+            path = urbasic.__file__[0 : urbasic.__file__.find("urbasic")] + "log"
         else:
             path = os.path.join(*(re.split('\\\\|/', path)))
         if path[-1:]=='\\' or path[-1:]=='/':

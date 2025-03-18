@@ -25,7 +25,7 @@ __author__ = "Martin Huus Bjerge"
 __copyright__ = "Copyright 2017, Rope Robotics ApS, Denmark"
 __license__ = "MIT License"
 
-import URBasic
+import urbasic
 import numpy as np
 from enum import Enum, auto
 from scipy.spatial.transform import Rotation as R
@@ -35,7 +35,7 @@ from .waypoint6d import TCP6D, Joint6D, TCP6DDescriptor, Joint6DDescriptor
 from copy import deepcopy
 
 
-class UrScriptExt(URBasic.urScript.UrScript):
+class UrScriptExt(urbasic.urScript.UrScript):
   '''
   Interface to remote access UR script commands, and add some extended features as well.
   For more details see the script manual at this site:
@@ -56,7 +56,7 @@ class UrScriptExt(URBasic.urScript.UrScript):
     if robotModel is None:
       raise ValueError("RobotModel must be a valid RobotModel object")
     super(UrScriptExt, self).__init__(host, robotModel, hasForceTorque, conf_filename)
-    logger = URBasic.dataLogging.DataLogging()
+    logger = urbasic.dataLogging.DataLogging()
     name = logger.AddEventLogging(__name__, log2Consol=False)
     self.__logger = logger.__dict__[name]
     self.__logger.info('Init done')
@@ -398,7 +398,7 @@ end
     if self.__locked_func:
       raise Exception('This functionality is locked - do not use')
       return False
-    if not isinstance(pose, URBasic.waypoint6d.TCP6D):
+    if not isinstance(pose, urbasic.waypoint6d.TCP6D):
       raise ValueError("pose must be a TCP6D object")
     if not self.robotConnector.RobotModel.realtimeControlFlag:
       print("Realtime control not initialized!")
@@ -636,7 +636,7 @@ end
     if not isinstance(waypoints, list):
       raise ValueError("waypoints must be a list of Joint6DDescriptor objects")
     for w in waypoints:
-      if not isinstance(w, URBasic.waypoint6d.Joint6DDescriptor):
+      if not isinstance(w, urbasic.waypoint6d.Joint6DDescriptor):
         raise ValueError(f"waypoints must be a list of Joint6DDescriptor objects - at least one object is not a Joint6DDescriptor object (is {type(w)})")
     prg = '''def move_waypoints():
 {exec_str}
@@ -663,7 +663,7 @@ end
     if not isinstance(waypoints, list):
       raise ValueError("waypoints must be a list of TCP6DDescriptor objects")
     for w in waypoints:
-      if not isinstance(w, URBasic.waypoint6d.TCP6DDescriptor):
+      if not isinstance(w, urbasic.waypoint6d.TCP6DDescriptor):
         raise ValueError(f"waypoints must be a list of TCP6DDescriptor objects - at least one object is not a TCP6DDescriptor object (is {type(w)})")
     prg = '''def move_waypoints():
 {exec_str}
@@ -765,11 +765,11 @@ end
     Raises:
       ValueError: If the axis or feature is invalid.
     """
-    if not isinstance(from_pose, URBasic.waypoint6d.TCP6D):
+    if not isinstance(from_pose, urbasic.waypoint6d.TCP6D):
       raise ValueError("from_pose must be a TCP6D object")
-    if not isinstance(feature,  URBasic.UrScriptExt.DirectionFeature):
+    if not isinstance(feature,  urbasic.UrScriptExt.DirectionFeature):
       raise ValueError("feature must be a DirectionFeature object")
-    if not isinstance(axis,  URBasic.UrScriptExt.DirectionAxis):
+    if not isinstance(axis,  urbasic.UrScriptExt.DirectionAxis):
       raise ValueError("axis must be a DirectionAxis object")
     
     # Retrieve current position

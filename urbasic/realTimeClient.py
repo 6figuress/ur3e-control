@@ -25,7 +25,7 @@ __author__ = "Martin Huus Bjerge"
 __copyright__ = "Copyright 2017, Rope Robotics ApS, Denmark"
 __license__ = "MIT License"
 
-import URBasic
+import urbasic
 import socket
 import threading
 import select
@@ -43,14 +43,14 @@ class ConnectionState:
     STARTED = 4
 
 class RealTimeClient(object):
-    '''
+    """
     Interface to UR robot Real Time Client interface.
     For more detailes see this site:
     http://www.universal-robots.com/how-tos-and-faqs/how-to/ur-how-tos/remote-control-via-tcpip-16496/
-    
-    The Real Time Client in this version is only used to send program and script commands 
+
+    The Real Time Client in this version is only used to send program and script commands
     to the robot, not to read data from the robot, all data reading is done via the RTDE interface.
-    
+
     The constructor takes a UR robot hostname as input, and a RTDE configuration file.
 
     Input parameters:
@@ -58,11 +58,11 @@ class RealTimeClient(object):
     conf_filename (string):  Path to xml file describing what channels to activate
     logger (URBasis_DataLogging obj): A instance if a logger object if common logging is needed.
 
-    
+
     Example:
-    rob = URBasic.realTimeClient.RT_CLient('192.168.56.101')
+    rob = urbasic.realTimeClient.RT_CLient('192.168.56.101')
     self.close_rtc()
-    '''
+    """
 
 
     def __init__(self, robotModel, connect_timeout : int = 5):
@@ -70,11 +70,15 @@ class RealTimeClient(object):
         Constructor see class description for more info.
         '''
         if(False):
-            assert isinstance(robotModel, URBasic.robotModel.RobotModel)  ### This line is to get code completion for RobotModel
+            assert isinstance(
+                robotModel, urbasic.robotModel.RobotModel
+            )  ### This line is to get code completion for RobotModel
         self.__robotModel = robotModel
 
-        logger = URBasic.dataLogging.DataLogging()
-        name = logger.AddEventLogging(__name__, log2Consol=False,level = URBasic.logging.WARNING)
+        logger = urbasic.dataLogging.DataLogging()
+        name = logger.AddEventLogging(
+            __name__, log2Consol=False, level=urbasic.logging.WARNING
+        )
         self.__logger = logger.__dict__[name]
         self.__robotModel.rtcConnectionState = ConnectionState.DISCONNECTED
         self.__sock = None
@@ -86,16 +90,16 @@ class RealTimeClient(object):
             raise ConnectionError('Could not connect to robot')
         
     def __connect(self, timeout : int = 60):
-        '''
+        """
         Initialize RT Client connection to host .
-        
+
         Return value:
         success (boolean)
-        
+
         Example:
-        rob = URBasic.realTimeClient.RT_CLient('192.168.56.101')
+        rob = urbasic.realTimeClient.RT_CLient('192.168.56.101')
         rob.connect()
-        '''       
+        """       
         if self.__sock:
             return True
 
@@ -131,37 +135,37 @@ class RealTimeClient(object):
 
 
     def IsRtcConnected(self):
-        '''
+        """
         Returns True if the connection is open.
 
         Return value:
         status (boolean): True if connected and False of not connected.
 
         Example:
-        rob = URBasic.realTimeClient.RT_CLient('192.168.56.101')
+        rob = urbasic.realTimeClient.RT_CLient('192.168.56.101')
         rob.connect()
         print(rob.is_connected())
         rob.disconnect()
-        '''
+        """
         return self.__robotModel.rtcConnectionState > ConnectionState.DISCONNECTED
         
     def SendProgram(self,prg=''):
-        '''
-        Send a new command or program (string) to the UR controller. 
-        The command or program will be executed as soon as it's received by the UR controller. 
+        """
+        Send a new command or program (string) to the UR controller.
+        The command or program will be executed as soon as it's received by the UR controller.
         Sending a new command or program while stop and existing running command or program and start the new one.
         The program or command will also bee modified to include some control signals to be used
-        for monitoring if a program execution is successful and finished.  
+        for monitoring if a program execution is successful and finished.
 
         Input parameters:
         prg (string): A string containing a single command or a whole program.
 
         Example:
-        rob = URBasic.realTimeClient.RT_CLient('192.168.56.101',logger=logger)
+        rob = urbasic.realTimeClient.RT_CLient('192.168.56.101',logger=logger)
         rob.connect()
         rob.send_srt('set_digital_out(0, True)')
-        rob.disconnect()        
-        '''
+        rob.disconnect()
+        """
         if not self.IsRtcConnected():
             if not self.__connect():
                 self.__logger.error('SendProgram: Not connected to robot')
@@ -190,23 +194,23 @@ class RealTimeClient(object):
         #self.__waitForProgram2Finish(prg)
             
     def Send(self,prg=''):
-        '''
-        Send a new command (string) to the UR controller. 
-        The command or program will be executed as soon as it's received by the UR controller. 
+        """
+        Send a new command (string) to the UR controller.
+        The command or program will be executed as soon as it's received by the UR controller.
         Sending a new command or program while stop and existing running command or program and start the new one.
         The program or command will also bee modified to include some control signals to be used
-        for monitoring if a program execution is successful and finished.  
+        for monitoring if a program execution is successful and finished.
 
         Input parameters:
         prg (string): A string containing a single command or a whole program.
 
 
         Example:
-        rob = URBasic.realTimeClient.RT_CLient('192.168.56.101',logger=logger)
+        rob = urbasic.realTimeClient.RT_CLient('192.168.56.101',logger=logger)
         rob.connect()
         rob.send_srt('set_digital_out(0, True)')
-        rob.disconnect()        
-        '''
+        rob.disconnect()
+        """
         if not self.IsRtcConnected():
             if not self.__connect():
                 self.__logger.error('SendProgram: Not connected to robot')

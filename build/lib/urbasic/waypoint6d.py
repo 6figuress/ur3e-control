@@ -8,7 +8,7 @@ __copyright__ = "Copyright 2024, HES-SO Valais/Wallis, Suisse"
 __license__ = "MIT License"
 
 from math import radians
-import URBasic
+import urbasic
 
 class GenericWaypoint6D:
   """ Generic class to store a 6D waypoint
@@ -219,56 +219,72 @@ class TCP6D(GenericWaypoint6D):
     return self.__str__()
   
 class TCP6DDescriptor():
-  ''' A class to store a 6D TCP waypoint descriptor.
-  Used with functions like movel_waypoints.
-  '''
-  
-  def __init__(self, tcp : TCP6D, a : float = 1.2, v : float = 0.25, t : float = 0, r : float = 0):
-    ''' Constructor.
-    
-    Args:
-      tcp: The TCP waypoint to store.
-      a: The acceleration of the waypoints [m/s^2].
-      v: The velocity of the waypoints [m/s].
-      t: The time of the waypoints [s].
-      r: The radius of the waypoints [m]
-    '''
-    self.tcp = tcp
-    self.a = a
-    self.v = v
-    self.t = t
-    self.r = r
-    
-  def getAsDict(self) -> dict:
-    ''' Get the descriptor as a dictionary.
-    
-    Returns:
-      The descriptor as a dictionary.
-    '''
-    return {"pose": self.tcp.toList(), "a": self.a, "v": self.v, "t": self.t, "r": self.r}
-  
-  @staticmethod
-  def createFromTCPList(tcp_list : list[TCP6D], a : float = 1.2, v : float = 0.25, t : float = 0, r : float = 0) -> list['TCP6DDescriptor']:
-    ''' Create a list of TCP6DDescriptor from a list of TCP6D.
-    
-    Args:
-      tcp_list: The list of TCP6D to create the descriptors from.
-      a: The acceleration of the waypoints.
-      v: The velocity of the waypoints.
-      t: The time of the waypoints.
-      r: The radius of the waypoints.
-    
-    Returns:
-      A list of TCP6DDescriptor.
-    '''
-    if not isinstance(tcp_list, list):
-      raise ValueError("tcp_list must be a list")
-      return []
-    for t in tcp_list:
-      if not isinstance(t, URBasic.waypoint6d.TCP6D):
-        raise ValueError("tcp_list must be a list of TCP6D - at least one element is not a TCP6D")
-        return []
-    return [TCP6DDescriptor(t, a, v, t, r) for t in tcp_list]
+    """A class to store a 6D TCP waypoint descriptor.
+    Used with functions like movel_waypoints.
+    """
+
+    def __init__(
+        self, tcp: TCP6D, a: float = 1.2, v: float = 0.25, t: float = 0, r: float = 0
+    ):
+        """Constructor.
+
+        Args:
+          tcp: The TCP waypoint to store.
+          a: The acceleration of the waypoints [m/s^2].
+          v: The velocity of the waypoints [m/s].
+          t: The time of the waypoints [s].
+          r: The radius of the waypoints [m]
+        """
+        self.tcp = tcp
+        self.a = a
+        self.v = v
+        self.t = t
+        self.r = r
+
+    def getAsDict(self) -> dict:
+        """Get the descriptor as a dictionary.
+
+        Returns:
+          The descriptor as a dictionary.
+        """
+        return {
+            "pose": self.tcp.toList(),
+            "a": self.a,
+            "v": self.v,
+            "t": self.t,
+            "r": self.r,
+        }
+
+    @staticmethod
+    def createFromTCPList(
+        tcp_list: list[TCP6D],
+        a: float = 1.2,
+        v: float = 0.25,
+        t: float = 0,
+        r: float = 0,
+    ) -> list["TCP6DDescriptor"]:
+        """Create a list of TCP6DDescriptor from a list of TCP6D.
+
+        Args:
+          tcp_list: The list of TCP6D to create the descriptors from.
+          a: The acceleration of the waypoints.
+          v: The velocity of the waypoints.
+          t: The time of the waypoints.
+          r: The radius of the waypoints.
+
+        Returns:
+          A list of TCP6DDescriptor.
+        """
+        if not isinstance(tcp_list, list):
+            raise ValueError("tcp_list must be a list")
+            return []
+        for t in tcp_list:
+            if not isinstance(t, urbasic.waypoint6d.TCP6D):
+                raise ValueError(
+                    "tcp_list must be a list of TCP6D - at least one element is not a TCP6D"
+                )
+                return []
+        return [TCP6DDescriptor(t, a, v, t, r) for t in tcp_list]
 
 class Joint6D(GenericWaypoint6D):
   """ Class to store a 6D joint waypoint.
@@ -476,51 +492,66 @@ class Joint6D(GenericWaypoint6D):
     return self.__str__()
 
 class Joint6DDescriptor():
-  ''' A class to store a 6D joint waypoint descriptor.
-  Used with functions like movej_waypoints.
-  '''
-  
-  def __init__(self, joints : Joint6D, a = 1.4, v : float = 2.05, t : float = 0, r : float = 0):
-    ''' Constructor.
-    
-    Args:
-      joints: The joint waypoint to store.
-      a: The acceleration of the waypoints [rad/s^2].
-      v: The velocity of the waypoints [rad/s].
-      t: The time of the waypoints [s].
-      r: The radius of the waypoints [m].
-    '''
-    self.joints = joints
-    self.a = a
-    self.v = v
-    self.t = t
-    self.r = r
+    """A class to store a 6D joint waypoint descriptor.
+    Used with functions like movej_waypoints.
+    """
 
-  def getAsDict(self) -> dict:
-    ''' Get the descriptor as a dictionary.
-    '''
-    return {"q": self.joints.toList(), "a": self.a, "v": self.v, "t": self.t, "r": self.r}
-  
-  @staticmethod
-  def createFromJointsList(joints : list[Joint6D], a : float = 1.4, v : float = 2.05, t : float = 0, r : float = 0) -> list['Joint6DDescriptor']:
-    ''' Create a list of Joint6DDescriptor from a list of Joint6D.
-    
-    Args:
-      joints: The list of Joint6D to create the descriptors from.
-      a: The acceleration of the waypoints.
-      v: The velocity of the waypoints.
-      t: The time of the waypoints.
-      r: The radius of the waypoints.
-    
-    Returns:
-      A list of Joint6DDescriptor.
-    '''
-    if not isinstance(joints, list):
-      raise ValueError("joints must be a list")
-      return []
-    for j in joints:
-      if not isinstance(j, URBasic.waypoint6d.Joint6D):
-        raise ValueError("joints must be a list of Joint6D - at least one element is not a Joint6D")
-        return []
-    return [Joint6DDescriptor(j, a, v, t, r) for j in joints]
+    def __init__(
+        self, joints: Joint6D, a=1.4, v: float = 2.05, t: float = 0, r: float = 0
+    ):
+        """Constructor.
+
+        Args:
+          joints: The joint waypoint to store.
+          a: The acceleration of the waypoints [rad/s^2].
+          v: The velocity of the waypoints [rad/s].
+          t: The time of the waypoints [s].
+          r: The radius of the waypoints [m].
+        """
+        self.joints = joints
+        self.a = a
+        self.v = v
+        self.t = t
+        self.r = r
+
+    def getAsDict(self) -> dict:
+        """Get the descriptor as a dictionary."""
+        return {
+            "q": self.joints.toList(),
+            "a": self.a,
+            "v": self.v,
+            "t": self.t,
+            "r": self.r,
+        }
+
+    @staticmethod
+    def createFromJointsList(
+        joints: list[Joint6D],
+        a: float = 1.4,
+        v: float = 2.05,
+        t: float = 0,
+        r: float = 0,
+    ) -> list["Joint6DDescriptor"]:
+        """Create a list of Joint6DDescriptor from a list of Joint6D.
+
+        Args:
+          joints: The list of Joint6D to create the descriptors from.
+          a: The acceleration of the waypoints.
+          v: The velocity of the waypoints.
+          t: The time of the waypoints.
+          r: The radius of the waypoints.
+
+        Returns:
+          A list of Joint6DDescriptor.
+        """
+        if not isinstance(joints, list):
+            raise ValueError("joints must be a list")
+            return []
+        for j in joints:
+            if not isinstance(j, urbasic.waypoint6d.Joint6D):
+                raise ValueError(
+                    "joints must be a list of Joint6D - at least one element is not a Joint6D"
+                )
+                return []
+        return [Joint6DDescriptor(j, a, v, t, r) for j in joints]
     

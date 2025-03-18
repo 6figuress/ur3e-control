@@ -26,7 +26,7 @@ __copyright__ = "Copyright 2017, Rope Robotics ApS, Denmark"
 __license__ = "MIT License"
 
 from pkg_resources import resource_filename
-import URBasic
+import urbasic
 import threading
 import socket
 import struct
@@ -57,7 +57,7 @@ class ConnectionState:
     STARTED = 4
 
 class RTDE(threading.Thread): #, metaclass=Singleton
-    '''
+    """
     Interface to UR robot Real Time Data Exchange interface.
     See this site for more detail:
     http://www.universal-robots.com/how-tos-and-faqs/how-to/ur-how-tos/real-time-data-exchange-rtde-guide-22229/
@@ -70,9 +70,9 @@ class RTDE(threading.Thread): #, metaclass=Singleton
     logger (URBasis_DataLogging obj): A instance if a logger object if common logging is needed.
 
     Example:
-    rob = URBasic.rtde.RTDE('192.168.56.101', 'rtde_configuration.xml')
+    rob = urbasic.rtde.RTDE('192.168.56.101', 'rtde_configuration.xml')
     rob.close_rtde()
-    '''
+    """
 
 
     def __init__(self, robotModel, conf_filename=None):
@@ -80,10 +80,12 @@ class RTDE(threading.Thread): #, metaclass=Singleton
         Constructor see class description for more info.
         '''
         if(False):
-            assert isinstance(robotModel, URBasic.robotModel.RobotModel)  ### This line is to get code completion for RobotModel
+            assert isinstance(
+                robotModel, urbasic.robotModel.RobotModel
+            )  ### This line is to get code completion for RobotModel
         self.__robotModel = robotModel
 
-        logger = URBasic.dataLogging.DataLogging()
+        logger = urbasic.dataLogging.DataLogging()
         name = logger.AddEventLogging(__name__,log2Consol=False)
         self._logger = logger.__dict__[name]
         self.__reconnectTimeout = 600 #Seconds (while in run)
