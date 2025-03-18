@@ -12,24 +12,20 @@ Open the given Jupyter notebook to get a quick library overview:
 
 ## Install
 
-### Poetry 
 
-This codebase uses [poetry](https://python-poetry.org/docs/#installing-with-the-official-installer) for dependency management. Poetry can be installed with the command
-```bash
-curl -sSL https://install.python-poetry.org | python3 -
-```
-or, from a Windows Power shell, with
-```bash
-(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-```
-Make sure to add `poetry` to your `PATH` (see poetry documentation).
+To install this as a package you can either
 
-From the repository's top-level, run
-```bash
-poetry install
+```shell
+pip install git+https://github.com/6figuress/ur3e-control.git
 ```
 
-The virtual python environment can then be activated by invoking a `poetry shell`.
+Or to install it in editable mode :
+
+```shell
+git clone https://github.com/6figuress/ur3e-control.git
+cd ur3e-control
+pip install -e .
+```
 
 ## Forks
 Basecode is a fork of https://github.com/Mandelbr0t/UniversalRobot-Realtime-Control/tree/master.

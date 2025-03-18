@@ -1,14 +1,14 @@
 from setuptools import setup
 
 setup(
-    name="URBasic",
+    name="urbasic",
     version="0.0.1",
     description="Python library to control an UR robot",
     author="Mandelbr0t",
     modder="Axam",
     url='https://github.com/oroulet/python-urx',
-    packages=["URBasic"],
-    provides=["URBasic"],
+    packages=["urbasic"],
+    provides=["urbasic"],
     install_requires=["opencv-python", "requests"],
     python_requires=">=3.10,<3.12",
     license="GNU Lesser General Public License v3",
