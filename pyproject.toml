@@ -10,3 +10,6 @@ dependencies = [
     "scipy>=1.15.2",
     "setuptools>=77.0.1",
 ]
+
+[tool.setuptools.package-data]
+urbasic = ["*.xml"]
